@@ -12,7 +12,7 @@ int main() {
     client.post();
 
     if (client.getResponse().getStatusCode() == 200) {
-        system("cd .. && dragdroprobot.exe");
+        system("cd ../../application/ && dragdroprobot.exe");
     } else {
         std::cout << "Invalid serial number" << std::endl;
     }

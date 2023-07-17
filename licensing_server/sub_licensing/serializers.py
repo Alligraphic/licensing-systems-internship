@@ -38,6 +38,17 @@ class SubscriptionCheckSerializer(serializers.Serializer):
         now = datetime.datetime.now().date()
         return obj.activation_date + datetime.timedelta(days=obj.plan.length_days) >= now
 
+    @staticmethod
+    def get_sub_status(user, is_valid):
+        if is_valid:
+            return 'active'
+        else:
+            subscriptions = models.Subscription.objects.filter(user=user).all()
+            if len(subscriptions) == 0:
+                return 'no subscription'
+            else:
+                return 'expired'
+
     username = serializers.CharField(max_length=255)
     password = serializers.CharField(
         label="Password",
@@ -66,7 +77,11 @@ class SubscriptionCheckSerializer(serializers.Serializer):
         for subscription in subscriptions:
             is_valid = is_valid or self.get_is_valid(subscription)
 
-        data = {'is_valid': is_valid}
+        data = {
+            'is_valid': is_valid,
+            'username': username,
+            'sub_status': self.get_sub_status(user, is_valid)
+        }
 
         return data
 
