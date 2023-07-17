@@ -22,4 +22,5 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
 
     path('licensing/', include('licensing.urls')),
+    path('sub-licensing/', include('sub_licensing.urls')),
 ]
