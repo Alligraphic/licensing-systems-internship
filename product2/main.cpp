@@ -1,18 +1,9 @@
 #include <iostream>
 #include "HttpClient.h"
 
-int main() {
+void checkSubscription(const std::string& username, const std::string& password) {
     HttpClient client;
     client.setUrl("http://127.0.0.1:8001/sub-licensing/check/");
-
-    std::string username;
-    std::string password;
-
-    std::cout << "Enter username:\n";
-    std::cin >> username;
-
-    std::cout << "Enter password:\n";
-    std::cin >> password;
 
     std::string request = R"("{\"username\":\"")" + username + R"("\",\"password\":\")" + password + R"("\"})";
     client.setRequest(request);
@@ -34,6 +25,19 @@ int main() {
             std::cout << "renew in: http://127.0.0.1:8001/auth/users/" << std::endl;
         }
     }
+}
+
+int main() {
+    std::string username;
+    std::string password;
+
+    std::cout << "Enter username:\n";
+    std::cin >> username;
+
+    std::cout << "Enter password:\n";
+    std::cin >> password;
+
+    checkSubscription(username, password);
 
     return 0;
 }
