@@ -3,4 +3,4 @@ project(product2)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(Product2 main.cpp HttpClient.cpp HttpClient.h Response.cpp Response.h)
+add_executable(product2 main.cpp HttpClient.cpp HttpClient.h Response.cpp Response.h)
