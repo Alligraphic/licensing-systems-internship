@@ -5,6 +5,9 @@ from rest_framework import status
 
 from . import serializers
 from . import models
+from .signature import sign_string, private_key_path
+
+import os
 
 
 class PlanViewSet(ModelViewSet):
@@ -32,3 +35,16 @@ class SubscriptionCheckViewSet(ViewSet):
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
+class SubscriptionSignatureViewSet(ViewSet):
+    serializer_class = serializers.SubscriptionCheckSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+
+        print(os.getcwd())
+
+        signature = sign_string(data['sub_status'], private_key_path)
+        data['signature'] = signature.hex()
+        return Response(data, status=status.HTTP_200_OK)

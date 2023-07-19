@@ -6,5 +6,6 @@ router = routers.DefaultRouter()
 router.register('plans', views.PlanViewSet, 'plans')
 router.register('subscriptions', views.SubscriptionViewSet, 'subscriptions')
 router.register('check', views.SubscriptionCheckViewSet, 'subscription-check')
+router.register('sign-check', views.SubscriptionSignatureViewSet, 'subscription-signature')
 
 urlpatterns = router.urls
