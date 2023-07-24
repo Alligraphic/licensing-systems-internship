@@ -25,7 +25,7 @@ class Key(models.Model):
                 key += lower_alpha[seed % 26]
             else:
                 key += numbers[seed % 10]
-            seed = seed << 1
+            seed = seed >> 1
 
         return key
 

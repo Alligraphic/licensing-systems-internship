@@ -6,12 +6,16 @@ from key_licensing.models import Key
 
 
 def pad(text):
-    padding_length = 8 - (len(text) % 8)
-    if padding_length == 8:
+    padding_length = 32 - (len(text) % 32)
+    if padding_length == 32:
         padding_length = 0
-    padding = text * (padding_length // len(text) + 1)
+    loop_length = padding_length // len(text) + 1
 
-    return padding[:8]
+    padding = ''
+    for i in range(0, loop_length):
+        padding += str(int(text) + i)
+
+    return padding[:32]
 
 
 @receiver(post_save, sender=models.User)
