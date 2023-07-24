@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'authentication',
     'licensing',
     'sub_licensing',
+    'key_licensing',
 
 ]
 

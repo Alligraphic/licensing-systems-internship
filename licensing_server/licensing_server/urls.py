@@ -24,4 +24,5 @@ urlpatterns = [
 
     path('licensing/', include('licensing.urls')),
     path('sub-licensing/', include('sub_licensing.urls')),
+    path('key/', include('key_licensing.urls')),
 ]
