@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from . import models
+from .signature import verify_signature, public_key_path
 
 
 class PlanSerializer(serializers.ModelSerializer):
@@ -91,3 +92,29 @@ class SubscriptionCheckSerializer(serializers.Serializer):
         fields = ('email', 'password')
         read_only_fields = ('is_valid',)
 
+
+class VerifySignatureSerializer(serializers.Serializer):
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
+
+    message = serializers.CharField(max_length=255)
+    signature = serializers.CharField(max_length=1024)
+
+    def validate(self, data):
+        message = data.get('message')
+        signature = data.get('signature')
+
+        signature = bytes.fromhex(signature)
+
+        result = verify_signature(message, signature, public_key_path)
+
+        data['result'] = result
+
+        return data
+
+    class Meta:
+        fields = ('message', 'signature')
+        read_only_fields = ('result',)

@@ -48,3 +48,14 @@ class SubscriptionSignatureViewSet(ViewSet):
         signature = sign_string(data['sub_status'], private_key_path)
         data['signature'] = signature.hex()
         return Response(data, status=status.HTTP_200_OK)
+
+
+class VerifySignatureViewSet(ViewSet):
+    serializer_class = serializers.VerifySignatureSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+
+        return Response(data, status=status.HTTP_200_OK)
